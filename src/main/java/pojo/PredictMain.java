@@ -5,6 +5,7 @@ import hex.genmodel.easy.EasyPredictModelWrapper;
 import hex.genmodel.easy.RowData;
 import hex.genmodel.easy.exception.PredictException;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
@@ -21,8 +22,11 @@ public class PredictMain {
         System.out.println("prediction...");
         GBMModel rawProstateModel = new GBMModel();
         prostateModel = new EasyPredictModelWrapper(rawProstateModel);
+        ClassLoader classLoader = PredictMain.class.getClassLoader();
+        File file = new File(classLoader.getResource("pred_test_1.csv").getFile());
+        FileReader fileReader  = new FileReader(file);
 
-        CSVReader reader = new CSVReader(new FileReader("/Users/huss/GitTest/gisette/tmp/pred_test_1.csv"));
+        CSVReader reader = new CSVReader(fileReader);
         List myEntries = reader.readAll();
         String[] header = (String []) myEntries.get(0);
         String[] values = (String []) myEntries.get(1);
