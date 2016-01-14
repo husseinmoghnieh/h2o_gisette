@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 hadoop_url="ch1.citation.io"
+
 hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/GisetteScoreTest
 hadoop fs -mkdir hdfs://${hadoop_url}:/user/root/GisetteScoreTest
 hadoop fs -put ./data/gisette_train.data  hdfs://${hadoop_url}:/user/root/GisetteScoreTest/.
-hadoop fs -put ./data/gisette_train_small_header.data  hdfs://${hadoop_url}:/user/root/GisetteScoreTest/.
+
+
+hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/GisetteScoreTestSmall
+hadoop fs -mkdir hdfs://${hadoop_url}:/user/root/GisetteScoreTestSmall
+hadoop fs -put ./data/gisette_train_small_header.data  hdfs://${hadoop_url}:/user/root/GisetteScoreTestSmall/.
