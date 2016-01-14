@@ -36,6 +36,9 @@ if (! file.exists("tmp")) {
   dir.create("tmp")
 }
 
+h2o.exportFile(test1, "tmp/pred_test_1.csv", force = TRUE)
+h2o.exportFile(test2, "tmp/pred_test_2.csv", force = TRUE)
+
 h2o.download_pojo(gisette_model , path = "tmp")
 
 

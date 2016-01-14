@@ -1,10 +1,19 @@
 package pojo;
 
+import au.com.bytecode.opencsv.CSVReader;
 import hex.genmodel.easy.EasyPredictModelWrapper;
 import hex.genmodel.easy.RowData;
 import hex.genmodel.easy.exception.PredictException;
 import hex.genmodel.easy.prediction.BinomialModelPrediction;
-import pojo.ProstateModel;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import ai.h2o.hive.udf.GBMModel;
+import hex.genmodel.easy.prediction.RegressionModelPrediction;
 
 /**
  * Created by huss on 16-01-06.
@@ -12,49 +21,39 @@ import pojo.ProstateModel;
 public class PredictMain {
     static EasyPredictModelWrapper prostateModel;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("prediction...");
-        ProstateModel rawProstateModel = new ProstateModel();
+        GBMModel rawProstateModel = new GBMModel();
         prostateModel = new EasyPredictModelWrapper(rawProstateModel);
 
-//        ID,CAPSULE,AGE,RACE,DPROS,DCAPS,PSA,VOL,GLEASON
-//        1,0,65,1,2,1,1.4,0,6
+        CSVReader reader = new CSVReader(new FileReader("/Users/huss/GitTest/gisette/tmp/pred_test_1.csv"));
+        List myEntries = reader.readAll();
+        String[] header = (String []) myEntries.get(0);
+        String[] values = (String []) myEntries.get(1);
+
         RowData test1 = new RowData();
-        test1.put("AGE", "65");
-        test1.put("RACE", "1");
-        test1.put("DPROS", "2");
-        test1.put("DCAPS", "1");
-        test1.put("PSA", "1.4");
-        test1.put("VOL", "0");
-        test1.put("GLEASON", "6");
-
-        RowData test2 = new RowData();
-        test2.put("AGE", "71");
-        test2.put("RACE", "1");
-        test2.put("DPROS", "3");
-        test2.put("DCAPS", "2");
-        test2.put("PSA", "3.3");
-        test2.put("VOL", "0");
-        test2.put("GLEASON", "8");
-
+        for (int i=0; i < values.length; i++){
+            test1.put(header[i], values[i]);
+        }
 
         try {
-            BinomialModelPrediction p = predictProstate(test1);
+            RegressionModelPrediction p = predictProstate(test1);
+            System.out.println(p.value);
 
-            System.out.println("prediction: " +  p.labelIndex + "\t" +  p.classProbabilities[0] + "\t" + p.classProbabilities[1]);
+//            System.out.println("prediction: " +  p.labelIndex + "\t" +  p.classProbabilities[0] + "\t" + p.classProbabilities[1]);
 
-            p = predictProstate(test2);
-            System.out.println("prediction: " +  p.labelIndex + "\t" +  p.classProbabilities[0] + "\t" + p.classProbabilities[1]);
+//            p = predictProstate(test2);
+//            System.out.println("prediction: " +  p.labelIndex + "\t" +  p.classProbabilities[0] + "\t" + p.classProbabilities[1]);
 
 
 
         } catch (PredictException p) {
-
+            System.out.println(p.getStackTrace());
         }
     }
 
 
-    private static BinomialModelPrediction predictProstate(RowData row) throws PredictException {
-        return prostateModel.predictBinomial(row);
+    private static RegressionModelPrediction predictProstate(RowData row) throws PredictException {
+        return prostateModel.predictRegression(row);
     }
 }
