@@ -4,14 +4,10 @@ import au.com.bytecode.opencsv.CSVReader;
 import hex.genmodel.easy.EasyPredictModelWrapper;
 import hex.genmodel.easy.RowData;
 import hex.genmodel.easy.exception.PredictException;
-import hex.genmodel.easy.prediction.BinomialModelPrediction;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import ai.h2o.hive.udf.GBMModel;
 import hex.genmodel.easy.prediction.RegressionModelPrediction;
 
