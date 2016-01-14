@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-os_name=sudo uname
-echo ${os_name}
-if %os_name% == "Linux"
-    echo ${os_name}
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+        echo "GBMmodel package upadted"
+elif [[ "$OSTYPE" == "darwin14" ]]; then
+	echo "Please set manually the package name in GBModel.java"
+fi
