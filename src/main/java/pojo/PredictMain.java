@@ -22,30 +22,38 @@ public class PredictMain {
         System.out.println("prediction...");
         GBMModel rawProstateModel = new GBMModel();
         prostateModel = new EasyPredictModelWrapper(rawProstateModel);
+
         ClassLoader classLoader = PredictMain.class.getClassLoader();
+
+
         File file = new File(classLoader.getResource("pred_test_1.csv").getFile());
         FileReader fileReader  = new FileReader(file);
-
         CSVReader reader = new CSVReader(fileReader);
         List myEntries = reader.readAll();
         String[] header = (String []) myEntries.get(0);
         String[] values = (String []) myEntries.get(1);
-
         RowData test1 = new RowData();
         for (int i=0; i < values.length; i++){
             test1.put(header[i], values[i]);
         }
 
+        file = new File(classLoader.getResource("pred_test_2.csv").getFile());
+        fileReader  = new FileReader(file);
+        reader = new CSVReader(fileReader);
+        myEntries = reader.readAll();
+        header = (String []) myEntries.get(0);
+        values = (String []) myEntries.get(1);
+        RowData test2 = new RowData();
+        for (int i=0; i < values.length; i++){
+            test2.put(header[i], values[i]);
+        }
+
         try {
-            RegressionModelPrediction p = predictProstate(test1);
-            System.out.println(p.value);
+            RegressionModelPrediction p1 = predictProstate(test1);
+            System.out.println(p1.value);
 
-//            System.out.println("prediction: " +  p.labelIndex + "\t" +  p.classProbabilities[0] + "\t" + p.classProbabilities[1]);
-
-//            p = predictProstate(test2);
-//            System.out.println("prediction: " +  p.labelIndex + "\t" +  p.classProbabilities[0] + "\t" + p.classProbabilities[1]);
-
-
+            RegressionModelPrediction p2 = predictProstate(test2);
+            System.out.println(p2.value);
 
         } catch (PredictException p) {
             System.out.println(p.getStackTrace());
