@@ -1,11 +1,11 @@
 library(h2o)
-h2o.init()
-
-train_all  <- h2o.importFile(path = "data/gisette_train.data")
+#h2o.init()
+localH2O <- h2o.init(ip = "ch2-slave-2.citation.io", port = 54321, startH2O = FALSE)
+train_all  <- h2o.importFile(path = "hdfs://ch2-master.citation.io/user/root/GisetteScoreTest/gisette_train.data")
 preset <- names(train_all)
 
 
-train_label  <- h2o.importFile(path = "data/gisette_train.labels")
+train_label  <- h2o.importFile(path = "hdfs://ch2-master.citation.io/user/root/GisetteScoreTestLabels/gisette_train.labels")
 names(train_label)[names(train_label)=="C1"] <- "CLASSIFICATION"
 train_all$CLASSIFICATION <- train_label;
 train_all$CLASSIFICATION = as.numeric(train_all$CLASSIFICATION)
