@@ -2,6 +2,12 @@
 
 hadoop_url="ch2-master.citation.io"
 
+#create tmp directory
+hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/tmp
+hadoop fs -mkdir hdfs://${hadoop_url}:/user/root/tmp
+
+
+
 #train data no label
 hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/GisetteScoreTest
 hadoop fs -mkdir hdfs://${hadoop_url}:/user/root/GisetteScoreTest
