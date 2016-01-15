@@ -24,24 +24,25 @@ gisette_model <- h2o.gbm(x = preset,
                              distribution = "gaussian",
                              max_depth = 5,
                              ntrees = 110)
-test1 <- train_all[1, ]
-test2 <- train_all[2, ]
 
-pred_test_1 = h2o.predict(gisette_model, test1)
-pred_test_2 = h2o.predict(gisette_model, test2)
-print(pred_test_1)
-print(pred_test_2)
 
 if (! file.exists("tmp")) {
   dir.create("tmp")
 }
 
-h2o.exportFile(test1, "hdfs://ch2-slave-2.citation.io/user/root/tmp/pred_test_1.csv", force = TRUE)
-h2o.exportFile(test2, "hdfs://ch2-slave-2.citation.io/user/root/tmp/pred_test_2.csv", force = TRUE)
+h2o.exportFile(test1, "hdfs://ch2-master.citation.io/user/root/tmp/pred_test_1.csv", force = TRUE)
+h2o.exportFile(test2, "hdfs://ch2-master.citation.io/user/root/tmp/pred_test_2.csv", force = TRUE)
 
 h2o.download_pojo(gisette_model , path = "tmp")
 
+test1 <- train_all[1, ]
+test2 <- train_all[2, ]
 
+pred_test_1 = h2o.predict(gisette_model, test1)
+pred_test_2 = h2o.predict(gisette_model, test2)
+
+print(pred_test_1)
+print(pred_test_2)
 
 #
 ## Make and export predictions.
