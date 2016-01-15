@@ -8,4 +8,6 @@ elif [[ "$OSTYPE" == "darwin14" ]]; then
 fi
 cp ./tmp/*.java ./src/main/java/ai/h2o/hive/udf/
 cp ./tmp/*.jar ./localjars/
-cp ./tmp/*.csv ./src/main/resources/
+hadoop fs -copyToLocal hdfs://ch2-master.citation.io/user/root/tmp/ ./src/main/resources/
+
+#cp ./tmp/*.csv ./src/main/resources/
