@@ -26,7 +26,7 @@ public class PredictMain {
         ClassLoader classLoader = PredictMain.class.getClassLoader();
 
 
-        File file = new File(classLoader.getResource("pred_test_1.csv").getFile());
+        File file = new File(classLoader.getResource("tmp/pred_test_1.csv").getFile());
         FileReader fileReader  = new FileReader(file);
         CSVReader reader = new CSVReader(fileReader);
         List myEntries = reader.readAll();
@@ -37,7 +37,7 @@ public class PredictMain {
             test1.put(header[i], values[i]);
         }
 
-        file = new File(classLoader.getResource("pred_test_2.csv").getFile());
+        file = new File(classLoader.getResource("tmp/pred_test_2.csv").getFile());
         fileReader  = new FileReader(file);
         reader = new CSVReader(fileReader);
         myEntries = reader.readAll();
