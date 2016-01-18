@@ -38,6 +38,9 @@ class ScoreDataUDF extends GenericUDF {
   public ObjectInspector initialize(ObjectInspector[] args) throws UDFArgumentException {
     // Basic argument count check
     // Expects one less argument than model used; results column is dropped
+    System.out.println("record length: " + args.length);
+    System.out.println("columns " + p.getNumCols());
+
     if (args.length != p.getNumCols()) {
       throw new UDFArgumentLengthException("Incorrect number of arguments." +
               "  scoredata() requires: "+ Arrays.asList(p.getNames())
