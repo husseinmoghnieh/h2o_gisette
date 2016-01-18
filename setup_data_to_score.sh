@@ -13,6 +13,14 @@ hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/GisetteScoreTest
 hadoop fs -mkdir hdfs://${hadoop_url}:/user/root/GisetteScoreTest
 hadoop fs -put ./data/gisette_train.data  hdfs://${hadoop_url}:/user/root/GisetteScoreTest/.
 
+
+#train data no label
+hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/GisetteScoreTestCSV
+hadoop fs -mkdir hdfs://${hadoop_url}:/user/root/GisetteScoreTestCSV
+hadoop fs -put ./data/gisette_train.csv  hdfs://${hadoop_url}:/user/root/GisetteScoreTestCSV/.
+
+
+
 #label
 hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/GisetteScoreTestLabels
 hadoop fs -mkdir hdfs://${hadoop_url}:/user/root/GisetteScoreTestLabels
