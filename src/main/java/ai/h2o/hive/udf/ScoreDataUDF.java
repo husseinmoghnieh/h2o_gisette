@@ -70,7 +70,7 @@ class ScoreDataUDF extends GenericUDF {
     // Expects one less argument than model used; results column is dropped
     if (record != null) {
       System.out.println("record length: " + record.length);
-      System.out.println("columns " + p.getNumCols);
+      System.out.println("columns " + p.getNumCols());
 
       if (record.length == p.getNumCols()) {
         double[] data = new double[record.length];
