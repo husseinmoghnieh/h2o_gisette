@@ -69,6 +69,9 @@ class ScoreDataUDF extends GenericUDF {
   public Object evaluate(DeferredObject[] record) throws HiveException {
     // Expects one less argument than model used; results column is dropped
     if (record != null) {
+      System.out.println("record length: " + record.length);
+      System.out.println("columns " + p.getNumCols);
+
       if (record.length == p.getNumCols()) {
         double[] data = new double[record.length];
         //Sadly, HIVE UDF doesn't currently make the field name available.
