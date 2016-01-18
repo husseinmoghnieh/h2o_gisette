@@ -18,7 +18,7 @@ valid <- train_all[(rand_vec > 0.8),]
 
 
 
-gisette_model <- h2o.gbm(x = preset,
+gisette_model <- h2o.glm(x = preset,
                              y = "CLASSIFICATION",
                              training_frame = train,
                              validation_frame  = valid,
