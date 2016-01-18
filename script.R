@@ -9,6 +9,8 @@ train_label  <- h2o.importFile(path = "hdfs://ch2-master.citation.io/user/root/G
 names(train_label)[names(train_label)=="C1"] <- "CLASSIFICATION"
 train_all$CLASSIFICATION <- train_label;
 train_all$CLASSIFICATION = as.numeric(train_all$CLASSIFICATION)
+train_all$CLASSIFICATION = as.factor(train_all$CLASSIFICATION)
+
 #
 rand_vec <- h2o.runif(train_all, seed = 1234)
 train <- train_all[rand_vec <= 0.8,]
@@ -21,9 +23,7 @@ gisette_model <- h2o.gbm(x = preset,
                              training_frame = train,
                              validation_frame  = valid,
                              model_id  = "GBMModel",
-                             distribution = "gaussian",
-                             max_depth = 5,
-                             ntrees = 110)
+                             family = "binomial")
 
 
 if (! file.exists("tmp")) {
@@ -42,9 +42,9 @@ pred_test_2 = h2o.predict(gisette_model, test2)
 print(pred_test_1)
 print(pred_test_2)
 
-h2o.exportFile(test1, "hdfs://ch2-master.citation.io/user/root/tmp/pred_test_1.csv", force = TRUE)
-h2o.exportFile(test2, "hdfs://ch2-master.citation.io/user/root/tmp/pred_test_2.csv", force = TRUE)
-
+#h2o.exportFile(test1, "hdfs://ch2-master.citation.io/user/root/tmp/pred_test_1.csv", force = TRUE)
+#h2o.exportFile(test2, "hdfs://ch2-master.citation.io/user/root/tmp/pred_test_2.csv", force = TRUE)
+#
 
 
 #

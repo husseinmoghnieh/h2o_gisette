@@ -10,18 +10,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import ai.h2o.hive.udf.GBMModel;
-import hex.genmodel.easy.prediction.RegressionModelPrediction;
+import hex.genmodel.easy.prediction.BinomialModelPrediction;
 
 /**
  * Created by huss on 16-01-06.
  */
 public class PredictMain {
-    static EasyPredictModelWrapper prostateModel;
+    static EasyPredictModelWrapper gisetteModel;
 
     public static void main(String[] args) throws IOException {
         System.out.println("prediction...");
-        GBMModel rawProstateModel = new GBMModel();
-        prostateModel = new EasyPredictModelWrapper(rawProstateModel);
+        GBMModel gbmModel = new GBMModel();
+        gisetteModel = new EasyPredictModelWrapper(gbmModel);
 
         ClassLoader classLoader = PredictMain.class.getClassLoader();
 
@@ -49,11 +49,12 @@ public class PredictMain {
         }
 
         try {
-            RegressionModelPrediction p1 = predictProstate(test1);
-            System.out.println(p1.value);
+            BinomialModelPrediction p = predictGisette(test1);
 
-            RegressionModelPrediction p2 = predictProstate(test2);
-            System.out.println(p2.value);
+            System.out.println("prediction: " +  p.labelIndex + "\t" +  p.classProbabilities[0] + "\t" + p.classProbabilities[1]);
+
+            p = predictGisette(test2);
+            System.out.println("prediction: " +  p.labelIndex + "\t" +  p.classProbabilities[0] + "\t" + p.classProbabilities[1]);
 
         } catch (PredictException p) {
             System.out.println(p.getStackTrace());
@@ -61,7 +62,7 @@ public class PredictMain {
     }
 
 
-    private static RegressionModelPrediction predictProstate(RowData row) throws PredictException {
-        return prostateModel.predictRegression(row);
+    private static BinomialModelPrediction predictGisette(RowData row) throws PredictException {
+        return gisetteModel.predictBinomial(row);
     }
 }
