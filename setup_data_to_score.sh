@@ -17,7 +17,7 @@ hadoop fs -put ./data/gisette_train.data  hdfs://${hadoop_url}:/user/root/Gisett
 #train data no label
 hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/GisetteScoreTestCSV
 hadoop fs -mkdir hdfs://${hadoop_url}:/user/root/GisetteScoreTestCSV
-hadoop fs -put ./data/gisette_train.csv  hdfs://${hadoop_url}:/user/root/GisetteScoreTestCSV/.
+hadoop fs -put ./data/gisette_train_clean.csv  hdfs://${hadoop_url}:/user/root/GisetteScoreTestCSV/.
 
 
 

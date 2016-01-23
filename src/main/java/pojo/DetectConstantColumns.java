@@ -22,7 +22,7 @@ public class DetectConstantColumns {
         for (int i = 0; i < 5000; i++)
             isConstant[i] = true;
 
-        for (int i = 0; i < myEntries.size(); i++) {
+        for (int i = 1; i < myEntries.size(); i++) {
             String[] values = (String[]) myEntries.get(i);
             for (int j = 0; j < values.length - 1; j++) {
 //                System.out.println(values[j]);
@@ -35,7 +35,7 @@ public class DetectConstantColumns {
             if(isConstant[i])
                 System.out.println(i);
 
-        PrintWriter writer = new PrintWriter("gisette_train.csv", "UTF-8");
+        PrintWriter writer = new PrintWriter("gisette_train_clean.csv", "UTF-8");
         for (int i = 0; i < myEntries.size(); i++) {
             String[] values = (String[]) myEntries.get(i);
             StringBuilder stringBuilder = new StringBuilder();
