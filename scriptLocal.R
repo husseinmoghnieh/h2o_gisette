@@ -1,23 +1,24 @@
 library(h2o)
 #h2o.init()
 localH2O <- h2o.init()
-train_all  <- h2o.importFile(path = "data/gisette_train.data")
+train_all  <- h2o.importFile(path = "data/gisette_train_clean.csv")
 preset <- names(train_all)
+test1 <- train_all[1, ]
+test2 <- train_all[2, ]
 
+h2o.exportFile(test1, "pred_test_1.csv", force = TRUE)
+h2o.exportFile(test2, "pred_test_2.csv", force = TRUE)
 
 train_label  <- h2o.importFile(path = "data/gisette_train.labels")
 names(train_label)[names(train_label)=="C1"] <- "CLASSIFICATION"
-train_all$CLASSIFICATION <- train_label;
-#train_all$CLASSIFICATION = as.numeric(train_all$CLASSIFICATION)
-train_all$CLASSIFICATION = as.factor(train_all$CLASSIFICATION)
 
 #
 rand_vec <- h2o.runif(train_all, seed = 1234)
 train <- train_all[rand_vec <= 0.8,]
 valid <- train_all[(rand_vec > 0.8),]
-
-h2o.exportFile(train, "tmp/train.csv", force = TRUE)
-h2o.exportFile(valid, "tmp/valid.csv", force = TRUE)
+#
+#h2o.exportFile(train, "tmp/train.csv", force = TRUE)
+#h2o.exportFile(valid, "tmp/valid.csv", force = TRUE)
 
 #
 #gisette_model <- h2o.glm(x = preset,
@@ -35,8 +36,8 @@ h2o.exportFile(valid, "tmp/valid.csv", force = TRUE)
 #
 #h2o.download_pojo(gisette_model , path = "tmp")
 #
-#test1 <- train_all[1, ]
-#test2 <- train_all[2, ]
+test1 <- train_all[1, ]
+test2 <- train_all[2, ]
 
 
 
@@ -47,9 +48,9 @@ h2o.exportFile(valid, "tmp/valid.csv", force = TRUE)
 #print(pred_test_1)
 #print(pred_test_2)
 
-#h2o.exportFile(test1, "hdfs://ch2-master.citation.io/user/root/tmp/pred_test_1.csv", force = TRUE)
-#h2o.exportFile(test2, "hdfs://ch2-master.citation.io/user/root/tmp/pred_test_2.csv", force = TRUE)
-#
+h2o.exportFile(test1, "pred_test_1.csv", force = TRUE)
+h2o.exportFile(test2, "pred_test_2.csv", force = TRUE)
+
 
 
 #
