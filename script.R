@@ -5,7 +5,7 @@ train_all  <- h2o.importFile(path = "hdfs://ch4-master.citation.io/user/root/Gis
 preset <- names(train_all)
 
 
-train_label  <- h2o.importFile(path = "hdfs://ch4-master.citatio.io/user/root/GisetteScoreTestLabels/gisette_train.labels")
+train_label  <- h2o.importFile(path = "hdfs://ch4-master.citation.io/user/root/GisetteScoreTestLabels/gisette_train.labels")
 names(train_label)[names(train_label)=="C1"] <- "CLASSIFICATION"
 train_all$CLASSIFICATION <- train_label;
 train_all$CLASSIFICATION = as.numeric(train_all$CLASSIFICATION)
