@@ -30,4 +30,4 @@ hadoop fs -put ./data/gisette_train.labels  hdfs://${hadoop_url}:/user/root/Gise
 
 hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/GisetteScoreTestSmall
 hadoop fs -mkdir hdfs://${hadoop_url}:/user/root/GisetteScoreTestSmall
-hadoop fs -put ./data/gisette_train_small_header.data  hdfs://${hadoop_url}:/user/root/GisetteScoreTestSmall/.
+hadoop fs -put ./data/gisette_train_small.data  hdfs://${hadoop_url}:/user/root/GisetteScoreTestSmall/.
