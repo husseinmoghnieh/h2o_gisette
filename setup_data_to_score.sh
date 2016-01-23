@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-hadoop_url="ch2-master.citation.io"
+hadoop_url="ch4-master.citation.io"
 
 #create tmp directory
 hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/tmp
