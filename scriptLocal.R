@@ -1,77 +1,42 @@
 library(h2o)
-#h2o.init()
 localH2O <- h2o.init()
-train_all  <- h2o.importFile(path = "data/gisette_train_clean.csv")
-preset <- names(train_all)
-test1 <- train_all[1, ]
-test2 <- train_all[2, ]
-
-h2o.exportFile(test1, "pred_test_1.csv", force = TRUE)
-h2o.exportFile(test2, "pred_test_2.csv", force = TRUE)
-
-train_label  <- h2o.importFile(path = "data/gisette_train.labels")
-names(train_label)[names(train_label)=="C1"] <- "CLASSIFICATION"
-
-#
+train_all  <- h2o.importFile(path = "data/gisette_train.data")
 rand_vec <- h2o.runif(train_all, seed = 1234)
+
+
 train <- train_all[rand_vec <= 0.8,]
 valid <- train_all[(rand_vec > 0.8),]
-#
-#h2o.exportFile(train, "tmp/train.csv", force = TRUE)
-#h2o.exportFile(valid, "tmp/valid.csv", force = TRUE)
-
-#
-#gisette_model <- h2o.glm(x = preset,
-#                             y = "CLASSIFICATION",
-#                             training_frame = train,
-##                             validation_frame  = valid,
-#                             model_id  = "GBMModel",
-#                             family = "binomial")
-#
-#
-#if (! file.exists("tmp")) {
-#  dir.create("tmp")
-#}
-#
-#
-#h2o.download_pojo(gisette_model , path = "tmp")
-#
-test1 <- train_all[1, ]
-test2 <- train_all[2, ]
 
 
+#Sum all columns
+colums_sum <- apply(train, 2, sum)
+#
+# A column with 0 sum is considered to be a constant output
+constantFunction = function(x){
+    x == 0
+}
 
 #
-#pred_test_1 = h2o.predict(gisette_model, test1)
-#pred_test_2 = h2o.predict(gisette_model, test2)
-#
-#print(pred_test_1)
-#print(pred_test_2)
+non_constant <-apply(colums_sum, 1, constantFunction)
+#print(non_constant)
+dropss <- vector()
+dropss <- c(dropss, 'C1')
+for(i in 1:40)
+{
 
-h2o.exportFile(test1, "pred_test_1.csv", force = TRUE)
-h2o.exportFile(test2, "pred_test_2.csv", force = TRUE)
+        xx <- as.numeric(non_constant[,i])
+        if ( xx[1,1] > 0 )
+             dropss <- c(dropss, paste('C', i, sep=''))
+
+}
+#print(non_constant)
+print(dropss)
+drops <- c("C1","C2")
+train <- train[,!(names(train) %in% drops)]
+valid <- valid[,!(names(valid) %in% drops)]
+#
+print(dim(valid))
+
+print(dim(train))
 
 
-
-#
-## Make and export predictions.
-#h2o_single_test_1  <- h2o.importFile(path = "data/prostate_test_actual0.csv")
-#h2o_single_test_2  <- h2o.importFile(path = "data/prostate_test_actual1.csv")
-#
-#pred_test_1 = h2o.predict(binomial.fit, h2o_single_test_1)
-#pred_test_2 = h2o.predict(binomial.fit, h2o_single_test_2)
-#
-#if (! file.exists("tmp")) {
-#  dir.create("tmp")
-#}
-#
-#h2o.exportFile(pred_test_1, "tmp/pred_test_1.csv", force = TRUE)
-#h2o.exportFile(pred_test_2, "tmp/pred_test_2.csv", force = TRUE)
-#h2o.download_pojo(binomial.fit , path = "tmp")
-#
-## Or you can export the predictions to hdfs:
-##   h2o.exportFile(pred, "hdfs://namenode/path/to/file.csv")1718
-#
-## Calculate metrics.
-##perf = h2o.performance(binomial.fit, test)
-##print(perf)
