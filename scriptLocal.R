@@ -57,5 +57,10 @@ test2 <- train_all[2, ]
 pred_test_1 = h2o.predict(gisette_model, test1)
 pred_test_2 = h2o.predict(gisette_model, test2)
 #
+
+h2o.exportFile(test1, "tmp/pred_test_1.csv", force = TRUE)
+h2o.exportFile(test2, "tmp/pred_test_2.csv", force = TRUE)
+
+
 print(pred_test_1)
 print(pred_test_2)
