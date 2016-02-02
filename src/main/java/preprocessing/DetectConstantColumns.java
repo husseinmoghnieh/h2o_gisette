@@ -4,6 +4,7 @@ import ai.h2o.pojo.PredictMain;
 import au.com.bytecode.opencsv.CSVReader;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -63,8 +64,18 @@ public class DetectConstantColumns {
             else
                 print(writerValid, row);
         }
+
+        List<String> dummRow = new ArrayList<>();
+        for(int i=0; i < 5001; i++)
+            dummRow.add("1");
+
+        print(writerTrain, dummRow);
+        print(writerValid, dummRow);
+
         writerTrain.close();
         writerValid.close();
+
+
 
 
 //        printArrayListToFile(trainData);
