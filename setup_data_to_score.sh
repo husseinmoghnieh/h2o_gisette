@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-hadoop_url="ch4-master.citation.io"
+hadoop_url="ch-master.logp.info"
 
 #create tmp directory
 hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/tmp
@@ -12,14 +12,6 @@ hadoop fs -mkdir hdfs://${hadoop_url}:/user/root/tmp
 hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/GisetteScoreTest
 hadoop fs -mkdir hdfs://${hadoop_url}:/user/root/GisetteScoreTest
 hadoop fs -put ./data/gisette_train.data  hdfs://${hadoop_url}:/user/root/GisetteScoreTest/.
-
-
-#train data no label
-hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/GisetteScoreTestCSV
-hadoop fs -mkdir hdfs://${hadoop_url}:/user/root/GisetteScoreTestCSV
-hadoop fs -put ./data/gisette_train_clean.csv  hdfs://${hadoop_url}:/user/root/GisetteScoreTestCSV/.
-
-
 
 #label
 hadoop fs -rm -r hdfs://${hadoop_url}:/user/root/GisetteScoreTestLabels
