@@ -1,7 +1,7 @@
 library(h2o)
 
 localH2O <- h2o.init(ip = "ch-slave-2.logp.info", port = 54321, startH2O = FALSE)
-train_all  <- h2o.importFile(path = "hdfs://ch-master.logp.info/user/root/GisetteScoreTestCSV/gisette_train_clean.csv")
+train_all  <- h2o.importFile(path = "hdfs://ch-master.logp.info/user/root/GisetteScoreTest/gisette_train.data")
 preset <- names(train_all)
 
 
